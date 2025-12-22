@@ -1,0 +1,120 @@
+<definitions name="StudentService"
+             targetNamespace="http://www.examples.com/wsdl/StudentService.wsdl"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://www.examples.com/wsdl/StudentService.wsdl"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <types>
+        <xsd:schema targetNamespace="http://www.examples.com/wsdl/StudentService.wsdl">
+            <!-- Тип Студент -->
+            <xsd:complexType name="Student">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:int"/>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="specialization" type="xsd:string"/>
+                    <xsd:element name="course" type="xsd:int"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <!-- Get ONE -->
+            <xsd:element name="getStudentRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getStudentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="student" type="tns:Student"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Get ALL -->
+            <xsd:element name="getStudentsRequest">
+                <xsd:complexType>
+                    <xsd:sequence/> <!-- Пустой запрос -->
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getStudentsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <!-- Массив студентов -->
+                        <xsd:element name="students" type="tns:Student" minOccurs="0" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- Create -->
+            <xsd:element name="createStudentRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="specialization" type="xsd:string"/>
+                        <xsd:element name="course" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="createStudentResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="student" type="tns:Student"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+
+    <!-- Messages -->
+    <message name="GetStudentInput"><part name="body" element="tns:getStudentRequest"/></message>
+    <message name="GetStudentOutput"><part name="body" element="tns:getStudentResponse"/></message>
+    <message name="GetStudentsInput"><part name="body" element="tns:getStudentsRequest"/></message>
+    <message name="GetStudentsOutput"><part name="body" element="tns:getStudentsResponse"/></message>
+    <message name="CreateStudentInput"><part name="body" element="tns:createStudentRequest"/></message>
+    <message name="CreateStudentOutput"><part name="body" element="tns:createStudentResponse"/></message>
+
+    <!-- PortType -->
+    <portType name="StudentPortType">
+        <operation name="getStudent">
+            <input message="tns:GetStudentInput"/>
+            <output message="tns:GetStudentOutput"/>
+        </operation>
+        <operation name="getStudents">
+            <input message="tns:GetStudentsInput"/>
+            <output message="tns:GetStudentsOutput"/>
+        </operation>
+        <operation name="createStudent">
+            <input message="tns:CreateStudentInput"/>
+            <output message="tns:CreateStudentOutput"/>
+        </operation>
+    </portType>
+
+    <!-- Binding -->
+    <binding name="StudentBinding" type="tns:StudentPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getStudent">
+            <soap:operation soapAction="getStudent"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="getStudents">
+            <soap:operation soapAction="getStudents"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+        <operation name="createStudent">
+            <soap:operation soapAction="createStudent"/>
+            <input><soap:body use="literal"/></input>
+            <output><soap:body use="literal"/></output>
+        </operation>
+    </binding>
+
+    <service name="StudentService">
+        <port name="StudentPort" binding="tns:StudentBinding">
+            <soap:address location="http://localhost:8000/soap"/>
+        </port>
+    </service>
+</definitions>

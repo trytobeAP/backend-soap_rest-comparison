@@ -1,44 +1,27 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    /* Основные настройки */
+    "target": "es2016" /* Версия JS на выходе (Node.js отлично понимает ES2016+) */,
+    "module": "commonjs" /* Стандарт модулей (require/module.exports) */,
+    "moduleResolution": "node" /* Классический поиск модулей */,
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+    /* Пути */
+    "rootDir": "./src" /* Где лежат исходники */,
+    "outDir": "./dist" /* Куда складывать скомпилированный JS */,
 
-    // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    /* Совместимость и удобство */
+    "esModuleInterop": true /* Разрешает import express from 'express' */,
+    "resolveJsonModule": true /* Разрешает импортировать .json файлы */,
+    "skipLibCheck": true /* Ускоряет компиляцию, пропуская проверки внутри node_modules */,
+    "forceConsistentCasingInFileNames": true,
 
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+    /* Строгость */
+    "strict": true /* Включает все строгие проверки типов */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
