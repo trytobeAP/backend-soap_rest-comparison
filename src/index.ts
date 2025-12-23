@@ -22,6 +22,7 @@ app.use('/api', restRouter);
 const wsdlPath = path.join(__dirname, 'student/soap/student.wsdl');
 const wsdlXml = fs.readFileSync(wsdlPath, 'utf8');
 
+// Базовая инициализация rest через app.listen(PORT...)
 app.listen(PORT, () => {
   // Инициализация SOAP
   soap.listen(app, '/soap', soapService, wsdlXml, () => {

@@ -8,7 +8,6 @@ export const soapService = {
         return { student }; // Оборачиваем в объект, как в WSDL
       },
 
-      // НОВЫЙ МЕТОД
       getStudents: async function () {
         const students = await studentService.getAllStudents();
         return { students }; // Возвращаем объект { students: [...] }
